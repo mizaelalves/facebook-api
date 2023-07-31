@@ -12,6 +12,6 @@ export default class File extends BaseModel {
   public ownerId: number
 
   @column()
-  public filename: string
+  public fileName: string
 
 }
