@@ -35,6 +35,8 @@ export default class User extends BaseModel {
     }
   }
 
+
+
   @hasMany(() => UserKey)
   public keys: HasMany<typeof UserKey>
 
@@ -42,6 +44,8 @@ export default class User extends BaseModel {
     foreignKey: 'ownerId',
     onQuery: (query) => query.where({fileCategory: 'avatar'})
   })
+
+
   public avatar: HasOne<typeof File>
 
 }
