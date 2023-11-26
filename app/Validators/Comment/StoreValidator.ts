@@ -5,7 +5,8 @@ export default class StoreValidator {
   constructor(protected ctx: HttpContextContract) { }
 
   public schema = schema.create({
-    description: schema.string.optional({trim: true})
+    content: schema.string({trim: true}),
+    postId: schema.number()
   })
 
   public cacheKey = this.ctx.routeKey

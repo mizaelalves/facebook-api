@@ -36,6 +36,7 @@ export const appKey: string = Env.get('APP_KEY')
 | the config properties to make keep server secure.
 |
 */
+
 export const http: ServerConfig = {
   /*
   |--------------------------------------------------------------------------
@@ -50,6 +51,8 @@ export const http: ServerConfig = {
   */
   allowMethodSpoofing: false,
 
+
+  
   /*
   |--------------------------------------------------------------------------
   | Subdomain offset
@@ -148,7 +151,14 @@ export const logger: LoggerConfig = {
   |
   */
   name: Env.get('APP_NAME'),
-
+  response: {
+    messages: {
+      200: 'Operação bem-sucedida',
+      400: 'Requisição inválida',
+      500: 'Erro interno do servidor',
+      // Adicione mensagens para outros códigos de status, se necessário
+    },
+  },
   /*
   |--------------------------------------------------------------------------
   | Toggle logger

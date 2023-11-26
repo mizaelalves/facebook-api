@@ -9,7 +9,7 @@ export default class extends BaseSchema {
 
       table.text('description', 'longtext').notNullable()
       table.timestamps(true)
-      table.integer('user_id').unsigned().references('user_id').onUpdate('CASCADE')
+      table.integer('user_id').unsigned().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
     })
   }
 
