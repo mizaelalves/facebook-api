@@ -1,11 +1,14 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, hasMany, HasMany, hasOne, HasOne, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, hasMany, HasMany, hasOne, HasOne, manyToMany, ManyToMany, computed } from '@ioc:Adonis/Lucid/Orm'
 import { UserKey, File } from 'App/Models'
 import Post from './Post'
 import Comment from './Comment'
+import Conversation from './Conversation'
+
 
 export default class User extends BaseModel {
+
   @column({ isPrimary: true })
   public id: number
 
@@ -37,8 +40,6 @@ export default class User extends BaseModel {
     }
   }
 
-
-
   @hasMany(() => UserKey)
   public keys: HasMany<typeof UserKey>
 
@@ -65,9 +66,29 @@ export default class User extends BaseModel {
 
   @manyToMany(()=> User,{
     pivotTable: 'follows',
-    pivotForeignKey: 'followers_id',
+    pivotForeignKey: 'follower_id',
     pivotRelatedForeignKey: 'following_id'
   })
   public following: ManyToMany<typeof User>
 
+  @hasMany(()=> Conversation)
+  public conversations: HasMany<typeof Conversation>
+
+  @computed()
+  public get postsCount(){
+    return this.$extras.posts_count
+  }
+  @computed()
+  public get followersCount(){
+    return this.$extras.followers_count
+  }
+  @computed()
+  public get followingCount(){
+    return this.$extras.following_count
+  }
+
+  @computed()
+  public get isFollowing(){
+    return this.$extras.isFollowing
+  }
 }

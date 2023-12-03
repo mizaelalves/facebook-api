@@ -6,6 +6,13 @@ import './uploads'
 import './posts'
 import './comment'
 import './reactions'
+import './follows'
+import './profiles'
+import './messages'
+import './conversations'
+
+Route.on('/teste').render('teste')
+Route.on('/chat').render('chat')
 
 Route.get('/', async () => {
   return { hello: 'world' }

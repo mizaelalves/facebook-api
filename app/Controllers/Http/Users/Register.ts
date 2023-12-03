@@ -20,7 +20,7 @@ export default class RegistersController {
       user.related('keys').create({ key })
 
       const link = `${redirectURL.replace(/\/$/, '')}/${key}`
-
+      console.log(key)
       await Mail.send((message) => {
         message.to(email)
         message.from('contato@facebook.com', 'Facebook')

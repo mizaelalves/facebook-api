@@ -12,4 +12,4 @@ Route.put('users/avatar/', 'Users/Avatar.update').middleware('auth')
 Route.delete('users/avatar/', 'Users/Avatar.destroy').middleware('auth')
 
 Route.get('users/search', 'Search/ListUsers.index')
-.middleware('auth')
+Route.get('users/list', 'Search/ShowAllUsers.index')
