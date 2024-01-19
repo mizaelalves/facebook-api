@@ -9,52 +9,52 @@ export default class PostsController {
   public async index({ request, auth }: HttpContextContract) {
     const { username } = request.qs()
 
-    const user = (await User.findBy('username', username)) || auth.user!
+    const user = await User.findBy('username', username) || auth.user!
 
     await user.load('posts', (query) => {
       query.orderBy('id', 'desc')
 
       query.preload('media')
       query.withCount('comment')
-      
+
       query.preload('user', (query) => {
         query.select(['id', 'name', 'username'])
         query.preload('avatar')
       })
 
-      query.preload('comment', (query) =>{
+      query.preload('comment', (query) => {
         query.select(['userId', 'id', 'content', 'createdAt'])
-        query.preload('user', (query) =>{
+        query.preload('user', (query) => {
           query.select(['id', 'name', 'username'])
           query.preload('avatar')
         })
       })
-      query.withCount('reactions', (query)=>{
+      query.withCount('reactions', (query) => {
         query.where('type', 'like')
         query.as('likeCount')
       })
 
-      query.withCount('reactions', (query)=>{
+      query.withCount('reactions', (query) => {
         query.where('type', 'love')
         query.as('loveCount')
       })
 
-      query.withCount('reactions', (query)=>{
+      query.withCount('reactions', (query) => {
         query.where('type', 'haha')
         query.as('hahaCount')
       })
 
-      query.withCount('reactions', (query)=>{
+      query.withCount('reactions', (query) => {
         query.where('type', 'sad')
         query.as('sadCount')
       })
 
-      query.withCount('reactions', (query)=>{
+      query.withCount('reactions', (query) => {
         query.where('type', 'hangry')
         query.as('hangryCount')
       })
 
-      query.preload('reactions', () =>{
+      query.preload('reactions', () => {
         query.where('userId', auth.user!.id).first()
       })
     })
@@ -66,7 +66,7 @@ export default class PostsController {
     const data = await request.validate(StoreValidator)
     const post = await auth.user!.related('posts').create(data)
 
-    console.log(auth.user)
+
 
     return post
   }
@@ -80,6 +80,7 @@ export default class PostsController {
     }
 
     await post.merge(data).save()
+    return post
   }
 
   public async destroy({ response, params, auth }: HttpContextContract) {
