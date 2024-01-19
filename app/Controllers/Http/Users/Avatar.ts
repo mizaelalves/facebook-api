@@ -27,7 +27,7 @@ export default class UserAvatarController {
     })
     return avatar
   }
-  public async destroy({ request, auth }: HttpContextContract) {
+  public async destroy({  auth }: HttpContextContract) {
     await Database.transaction(async (trx) => {
 
 

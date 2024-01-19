@@ -1,9 +1,9 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { Conversation, User } from 'App/Models'
+import { Conversation} from 'App/Models'
 
 export default class MessagesController {
 
-  public async show({ request, response, auth, params }: HttpContextContract) {
+  public async show({ response, auth, params }: HttpContextContract) {
     try {
       const conversation = await Conversation.findOrFail(params.id)
       if(![conversation.userIdOne, conversation.userIdTwo].includes(auth.user!.id)){
@@ -16,7 +16,7 @@ export default class MessagesController {
       return ({ 'message': error })
     }
   }
-  public async index({ request, response, auth }: HttpContextContract) {
+  public async index({ auth }: HttpContextContract) {
     
 
 
